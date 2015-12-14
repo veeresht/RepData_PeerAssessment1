@@ -1,14 +1,4 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-author: "Veeresh Taranalli"
-date: "December 20, 2015"
-output: 
-  html_document:
-    keep_md: true
----
 
-## Loading and preprocessing the data
-```{r echo=TRUE, warning=FALSE}
 # Read the given data
 activity_df <- read.csv("activity.csv")   
 
@@ -16,11 +6,7 @@ activity_df <- read.csv("activity.csv")
 # Create a tbl_df from the loaded dataframe.
 library(dplyr)
 activity_tbl_df <- tbl_df(activity_df)
-```
 
-
-## What is mean total number of steps taken per day?
-```{r echo=TRUE, warning=FALSE, message=FALSE, fig.height=4.2, fig.width=7.1}
 # Compute the total number of steps day, 
 # mean and median of total number of steps per day
 activity_tbl_df_group_by_date <- group_by(activity_tbl_df, date)
@@ -41,10 +27,7 @@ print(g)
 # Report mean and median of total number of steps per day
 cat("Mean Total No. of Steps per Day: ", mean_totalsteps, fill = TRUE)
 cat("Median Total No. of Steps per Day: ", median_totalsteps, fill = TRUE)
-```
 
-## What is the average daily activity pattern?
-```{r echo=TRUE, warning=FALSE, message=FALSE, fig.height=4.2, fig.width=7.1}
 # Compute the daily activity pattern and plot the resulting time series
 activity_tbl_df_group_by_interval <- group_by(activity_tbl_df, interval)
 results_pattern <- summarise(activity_tbl_df_group_by_interval, 
@@ -54,7 +37,7 @@ g <- ggplot(data=results_pattern, aes(results_pattern$interval,
                                       results_pattern$avgsteps))
 g <- g + geom_line(col="#00407B")
 g <- g + labs(title="Daily Activity Pattern (Avg. no. of steps)")
-g <- g + labs(x="5-minute intervals", y="Average no. of steps")
+g <- g + labs(x="Average no. of steps", y="5-second intervals")
 print(g)
 
 # Identify the 5-minute interval containing max. no. of steps
@@ -63,9 +46,3 @@ intvl_start <- max_avgsteps_loc*5 - 5
 intvl_end <- max_avgsteps_loc*5
 cat("5-minute interval containing maximum no. of steps:",
     intvl_start, "-", intvl_end)
-```
-## Imputing missing values
-
-
-
-## Are there differences in activity patterns between weekdays and weekends?
